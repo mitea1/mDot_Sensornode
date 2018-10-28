@@ -129,7 +129,7 @@ int32_t LoRa::setJoinMode(){
 	debugSerial->printf("setting join mode\n");
 
 	if(joinMode == OTA){
-		if ((ret = dot->setJoinMode(mDot::OTA)) != mDot::MDOT_OK) {
+		if ((ret = dot->setJoinMode(mDot::AUTO_OTA)) != mDot::MDOT_OK) {
 			debugSerial->printf("failed to set network address %d:%s\n", ret, mDot::getReturnCodeString(ret).c_str());
 		}
 	}
@@ -276,7 +276,7 @@ void LoRa::joinNetwork(){
     while ((ret = dot->joinNetwork()) != mDot::MDOT_OK) {
         debugSerial->printf("failed to join network %d:%s\n", ret, mDot::getReturnCodeString(ret).c_str());
         // in the 868 (EU) frequency band, we need to wait until another channel is available before transmitting again
-        osDelay(std::max((uint32_t)1000, (uint32_t)dot->getNextTxMs()));
+        osDelay(std::max((uint32_t)1000,(uint32_t)dot->getNextTxMs()));
     }
     debugSerial->printf("Network joined\n");
 }

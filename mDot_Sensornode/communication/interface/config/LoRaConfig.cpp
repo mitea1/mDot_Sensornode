@@ -39,7 +39,7 @@ void LoRaConfig::build(LORA_MODE desiredMode){
 		case LORA_MODE_1:
 			setNetworkPublicity(true);
 			setActivity(true);
-			setFrequencySubBand(LORA_SUBBAND_1);
+			setFrequencySubBand(0);
 			setSpreadingFactor(LORA_SPREADING_FACTOR_7);
 			setTxPowerdBm(LORA_TX_POWER_16_DBM);
 			setAcknowledgeRetries(LORA_ACKNOWLEDGE_RETRIES_0);

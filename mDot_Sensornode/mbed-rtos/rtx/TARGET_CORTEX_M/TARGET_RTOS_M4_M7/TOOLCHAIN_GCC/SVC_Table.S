@@ -1,5 +1,5 @@
 ;/*----------------------------------------------------------------------------
-; *      RL-ARM - RTX
+; *      CMSIS-RTOS  -  RTX
 ; *----------------------------------------------------------------------------
 ; *      Name:    SVC_TABLE.S
 ; *      Purpose: Pre-defined SVC Table for Cortex-M
@@ -33,23 +33,24 @@
 ; *---------------------------------------------------------------------------*/
 
 
-        .file   "SVC_Table.S"
+                AREA    SVC_TABLE, CODE, READONLY
 
+                EXPORT  SVC_Count
 
-        .section ".svc_table"
+SVC_Cnt         EQU    (SVC_End-SVC_Table)/4
+SVC_Count       DCD     SVC_Cnt
 
-        .global  SVC_Table
-SVC_Table:
-/* Insert user SVC functions here. SVC 0 used by RTL Kernel. */
-#       .long   __SVC_1                 /* user SVC function */
-SVC_End:
+; Import user SVC functions here.
+;               IMPORT  __SVC_1
 
-        .global  SVC_Count
-SVC_Count:
-        .long   (SVC_End-SVC_Table)/4
+                EXPORT  SVC_Table
+SVC_Table
+; Insert user SVC functions here. SVC 0 used by RTL Kernel.
+;               DCD     __SVC_1                 ; user SVC function
 
+SVC_End
 
-        .end
+                END
 
 /*----------------------------------------------------------------------------
  * end of file

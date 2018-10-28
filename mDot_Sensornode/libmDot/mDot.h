@@ -147,7 +147,7 @@ class mDot {
             DR13,
             DR14,
             DR15,
-            SF_12 = (uint8_t)16,
+            SF_12 = 16,
             SF_11,
             SF_10,
             SF_9,
