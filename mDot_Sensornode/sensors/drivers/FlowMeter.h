@@ -8,6 +8,7 @@
 #ifndef DRIVERS_FLOWMETER_H_
 #define DRIVERS_FLOWMETER_H_
 #include "InterruptIn.h"
+#include "Ticker.h"
 #include "mbed.h"
 /**
  * FlowSensorProperties
@@ -74,7 +75,7 @@ class FlowMeter {
      *
      * @param duration The tick duration (in ms).
      */
-    void tick(unsigned long duration = 1000);
+    void tick();
     void count(void);                                //!< Increments the internal pulse counter. Serves as an interrupt callback routine.
     void reset();                                //!< Prepares the flow meter for a fresh measurement. Resets all current values, but not the totals.
 
@@ -99,6 +100,8 @@ class FlowMeter {
 
   protected:
     InterruptIn* pulseInput;
+    Ticker* ticker;
+    unsigned long tickDuration_ms;
     //unsigned int _pin;                           //!< connection pin (has to be interrupt capable!)
     FlowSensorProperties _properties;            //!< sensor properties (including calibration data)
 

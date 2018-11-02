@@ -181,6 +181,7 @@ void Application::initMutexes(){
 	this->mutexI2C = new Mutex();
 	this->mutexUART1 = new Mutex();
 	this->mutexLoRa = new Mutex();
+	this->mutexFlowMeter = new Mutex();
 }
 
 void Application::initApplicationConfig(){

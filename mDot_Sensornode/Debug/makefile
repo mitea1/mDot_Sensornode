@@ -65,7 +65,7 @@ all: mDot_Sensornode.elf secondary-outputs
 mDot_Sensornode.elf: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GNU ARM Cross C++ Linker'
-	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "C:\Users\Adrian\eclipse-workspace\mDot_Sensornode\ldscripts\STM32F411XE.ld" -Xlinker --gc-sections -L"C:\Users\Adrian\eclipse-workspace\mDot_Sensornode\libmDot" -L"C:\Users\Adrian\eclipse-workspace\mDot_Sensornode\mbed\lib" -Wl,-Map,"mDot_Sensornode.map" --specs=nosys.specs -o "mDot_Sensornode.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	arm-none-eabi-g++ -mcpu=cortex-m4 -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -T "C:\Users\Adrian\git\mDot_Sensornode\mDot_Sensornode\ldscripts\STM32F411XE.ld" -Xlinker --gc-sections -L"C:\Users\Adrian\git\mDot_Sensornode\mDot_Sensornode\libmDot" -L"C:\Users\Adrian\git\mDot_Sensornode\mDot_Sensornode\mbed\lib" -Wl,-Map,"mDot_Sensornode.map" --specs=nosys.specs -o "mDot_Sensornode.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 

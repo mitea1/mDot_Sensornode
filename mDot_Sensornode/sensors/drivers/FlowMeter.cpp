@@ -17,6 +17,9 @@ FlowMeter::FlowMeter(InterruptIn* interruptPin, FlowSensorProperties prop) :
 {
 	this->pulseInput = interruptPin;
 	this->pulseInput->rise(this,&FlowMeter::count);
+	this->ticker = new Ticker();
+	this->tickDuration_ms = 1000;
+	this->ticker->attach(this,&FlowMeter::tick,this->tickDuration_ms/1000);
 	this->_currentCorrection = 0.0f;
 }
 
@@ -36,9 +39,9 @@ double FlowMeter::getTotalVolume() {
     return this->_totalVolume;                                              //!< in l
 }
 
-void FlowMeter::tick(unsigned long duration) {
+void FlowMeter::tick() {
     /* sampling and normalisation */
-    double seconds = duration / 1000.0f;                                    //!< normalised duration (in s, i.e. per 1000ms)
+    double seconds = this->tickDuration_ms / 1000.0f;                                    //!< normalised duration (in s, i.e. per 1000ms)
     //todo get rid of it cli();                                                                  //!< going to change interrupt variable(s)
     double frequency = this->_currentPulses / seconds;                      //!< normalised frequency (in 1/s)
     this->_currentPulses = 0;                                               //!< reset pulse counter after successfull sampling
@@ -54,11 +57,11 @@ void FlowMeter::tick(unsigned long duration) {
     this->_currentVolume = this->_currentFlowrate / (60.0f/seconds);        //!< get volume (in l) from normalised flow rate and normalised time
 
     /* update statistics: */
-    this->_currentDuration = duration;                                      //!< store current tick duration (convenience, in ms)
+    this->_currentDuration = this->tickDuration_ms;                                      //!< store current tick duration (convenience, in ms)
     this->_currentFrequency = frequency;                                    //!< store current pulses per second (convenience, in 1/s)
-    this->_totalDuration += duration;                                       //!< accumulate total duration (in ms)
+    this->_totalDuration += this->tickDuration_ms;                                       //!< accumulate total duration (in ms)
     this->_totalVolume += this->_currentVolume;                             //!< accumulate total volume (in l)
-    this->_totalCorrection += this->_currentCorrection * duration;          //!< accumulate corrections over time
+    this->_totalCorrection += this->_currentCorrection * this->tickDuration_ms;          //!< accumulate corrections over time
 }
 
 void FlowMeter::count(void) {
